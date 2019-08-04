@@ -11,6 +11,11 @@ Expected that you create directories tree as like:
      - mysql
        - (mysql configs and all your mysql-data)
    - project1
-     - nginx1.conf
+     - project1.nginx.conf
    - project2
-     - nginx2.conf
+     - project2.nginx.conf
+
+Don`t forget add records to C:\Windows\System32\driver\etc\hosts like:
+127.0.0.1 yourproject.local
+
+DO NOT USE ZONE .dev, it has issues with HSTS.

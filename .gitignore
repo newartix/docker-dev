@@ -1,0 +1,4 @@
+.idea
+docker-runs
+logs
+mysql/data/*
