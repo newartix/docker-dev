@@ -19,3 +19,6 @@ Don`t forget add records to C:\Windows\System32\driver\etc\hosts like:
 127.0.0.1 yourproject.local
 
 DO NOT USE ZONE .dev, it has issues with HSTS.
+
+Install Docker Desktop, open powershell and type:
+cd C:\your-projects-path\docker-dev\ && docker-compose up
