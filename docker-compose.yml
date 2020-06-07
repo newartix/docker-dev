@@ -17,6 +17,7 @@ services:
     links:
       - php
 
+
   mysql:
     image: mysql:latest
     ports:
@@ -32,12 +33,44 @@ services:
     volumes:
       - ./mysql/data:/var/lib/mysql
 
+  #redis:
+  #  image: redis:5.0.6
+  #  ports:
+  #    - "6379:6379"
+  #  container_name: redis
+  #  volumes:
+  #    - ./redis/data:/data
+
+  #nats:
+  #  image: nats
+  #  ports:
+  #    - "4222:4222"
+  #    - "6222:6222"
+  #    - "8222:8222"
+  #  container_name: nats
+
+  centrifugo:
+    image: centrifugo/centrifugo
+    ports:
+      - "8000:8000"
+    container_name: centrifugo
+    ulimits:
+      nofile: 65536
+    volumes:
+      - ./centrifugo/config_json:/centrifugo
+    command: centrifugo -c config.json --admin --admin_insecure
 
   php:
     # custom Dockerfile directory
     build: ./php
     container_name: php-fpm
+    ports:
+      - "2346:2346"
+      - "9000:9000"
+      - "9501:9501"
     volumes:
       - ../:/var/www
     links:
       - mysql
+      #- redis
+      #- nats
