@@ -1,13 +1,14 @@
-FROM php:7.4-fpm
-RUN apt-get update && apt-get install -y apt-utils libmcrypt-dev libpng-dev libjpeg-dev libfreetype6-dev libonig-dev libicu-dev \
+FROM php:7.3-fpm
+RUN apt-get update && apt-get install -y apt-utils libmcrypt-dev libpng-dev libjpeg-dev libfreetype6-dev libicu-dev libzip-dev zip \
 && addgroup --gid 497 nginx \
-&& useradd --uid 498 --gid 497 nginx
-RUN pecl install redis-3.1.1 \
-&& pecl install mcrypt-1.0.3 \
+&& useradd --uid 498 --gid 497 nginx \
+&& pecl install redis-3.1.1 \
+&& pecl install mcrypt-1.0.2 \
+&& docker-php-ext-install zip \
 && docker-php-ext-enable mcrypt \
-&& docker-php-ext-enable redis
-RUN docker-php-ext-install -j$(nproc) iconv intl mbstring pdo pdo_mysql \
-&& docker-php-ext-configure gd --with-freetype --with-jpeg \
+&& docker-php-ext-enable redis \
+&& docker-php-ext-install -j$(nproc) ctype iconv intl mbstring pdo pdo_mysql \
+&& docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
 && docker-php-ext-install -j$(nproc) gd \
 && rm -rf /var/www/html
 RUN apt-get install -y git \
@@ -23,6 +24,8 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 && php -r "unlink('composer-setup.php');"
 
 RUN docker-php-ext-install pcntl
+RUN apt-get install -y wget && wget https://get.symfony.com/cli/installer -O - | bash \
+&& mv /root/.symfony/bin/symfony /usr/local/bin/symfony
 
 #RUN pecl install swoole-4.4.8
 #RUN docker-php-ext-enable swoole

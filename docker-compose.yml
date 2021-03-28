@@ -4,15 +4,17 @@ version: '3.3'
 services:
 
   nginx:
-    image: nginx:latest
+    build: ./nginx
+    #image: nginx:latest
     container_name: nginx
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ../:/var/www/
-      - ./logs/nginx:/var/log/nginx/
+      - ../letsencrypt:/etc/letsencrypt
+      - ../projects:/var/www/
+      - ../logs/nginx:/var/log/nginx/
     #  - ./Nginx/html:/usr/share/nginx/html/
     links:
       - php
@@ -31,7 +33,7 @@ services:
       - MYSQL_PASSWORD=yourpassword
 
     volumes:
-      - ./mysql/data:/var/lib/mysql
+      - ../data/mysql:/var/lib/mysql
 
   #redis:
   #  image: redis:5.0.6
@@ -39,7 +41,7 @@ services:
   #    - "6379:6379"
   #  container_name: redis
   #  volumes:
-  #    - ./redis/data:/data
+  #    - ./data/redis:/data
 
   #nats:
   #  image: nats
@@ -49,27 +51,27 @@ services:
   #    - "8222:8222"
   #  container_name: nats
 
-  centrifugo:
-    image: centrifugo/centrifugo
-    ports:
-      - "8000:8000"
-    container_name: centrifugo
-    ulimits:
-      nofile: 65536
-    volumes:
-      - ./centrifugo/config_json:/centrifugo
-    command: centrifugo -c config.json --admin --admin_insecure
+  #centrifugo:
+  #  image: centrifugo/centrifugo
+  #  ports:
+  #    - "8000:8000"
+  #  container_name: centrifugo
+  #  ulimits:
+  #    nofile: 65536
+  #  volumes:
+  #    - ./centrifugo/config_json:/centrifugo
+  #  command: centrifugo -c config.json --admin --admin_insecure
 
   php:
     # custom Dockerfile directory
     build: ./php
     container_name: php-fpm
-    ports:
-      - "2346:2346"
-      - "9000:9000"
-      - "9501:9501"
+    #ports:
+    #  - "2346:2346"
+    #  - "9000:9000"
+    #  - "9501:9501"
     volumes:
-      - ../:/var/www
+      - ../projects:/var/www
     links:
       - mysql
       #- redis
