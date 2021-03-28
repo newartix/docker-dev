@@ -2,7 +2,7 @@
 Docker files and compose to simple run in dev with PhpStorm and on prod. Include mysql, php and nginx, redis and centrifugo.
 
 Expected that you create directories tree as like:
- - projects
+ - your-dev-path
    - docker-dev
      - nginx
        - (common nginx configs)
@@ -12,7 +12,9 @@ Expected that you create directories tree as like:
        - (mysql configs and all your mysql-data)
    - data
      - mysql
+       - (mysql presist data)
      - redis
+       - (redis persist data)
    - logs
    - projects
      - project1
