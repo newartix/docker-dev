@@ -1,5 +1,5 @@
 # docker-dev
-Docker files and compose to run in Windows 10 Docker Desktop with PhpStorm, include mysql, php and nginx.
+Docker files and compose to simple run in dev with PhpStorm and on prod. Include mysql, php and nginx, redis and centrifugo.
 
 Expected that you create directories tree as like:
  - projects
@@ -12,7 +12,7 @@ Expected that you create directories tree as like:
        - (mysql configs and all your mysql-data)
    - data
      - mysql
-	 - redis
+     - redis
    - logs
    - projects
      - project1
@@ -20,7 +20,7 @@ Expected that you create directories tree as like:
      - project2
         - project2.nginx.conf
 
-Don`t forget add records to C:\Windows\System32\driver\etc\hosts like:
+Don't forget add records to C:\Windows\System32\driver\etc\hosts like:
 127.0.0.1 yourproject.local
 
 DO NOT USE ZONE .dev, it has issues with HSTS.
